@@ -1,0 +1,4 @@
+include ':sdk-common'
+include ':sdk-render'
+include ':sdk-soundex'
+include ':sdk-inexact-search'

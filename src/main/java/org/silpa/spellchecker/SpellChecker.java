@@ -13,9 +13,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +95,8 @@ public class SpellChecker {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Collections.sort(dict);
+        this.dictionaries.put(language, dict);
         return dict;
     }
 
@@ -197,7 +203,28 @@ public class SpellChecker {
                 pos += 1;
             }
         }
-        return candidates;
+
+        // Sort using Levenshtein Distance
+
+        List<Map.Entry<String, Integer>> wordLevenshteinDistanceList = new LinkedList<>();
+        for (String candidate : candidates) {
+            wordLevenshteinDistanceList.add(new AbstractMap.SimpleEntry<String, Integer>
+                    (candidate, getLevenshteinDistance(candidate, word)));
+        }
+
+        Collections.sort(wordLevenshteinDistanceList, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> obj1, Map.Entry<String, Integer> obj2) {
+                return (obj1.getValue()).compareTo(obj2.getValue());
+            }
+        });
+
+        List<String> filteredCandidates = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : wordLevenshteinDistanceList) {
+            filteredCandidates.add(entry.getKey());
+        }
+
+        return filteredCandidates;
     }
 
     /**
@@ -254,11 +281,8 @@ public class SpellChecker {
 
         List<String> NWORDS = getWordList(word, language);
 
-        if (NWORDS == null) {
-            NWORDS = null;
-        }
-
-        return NWORDS.contains(word) || NWORDS.contains(word.toLowerCase());
+        return Collections.binarySearch(NWORDS, word) >= 0 ||
+                Collections.binarySearch(NWORDS, word.toLowerCase()) >= 0;
     }
 
     private static final String PUNCTUATIONS_REGEX = "[!\"#$%&'()*+,-./:;<=>?@\\[\\]^_`{|}~\\\\]";

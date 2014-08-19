@@ -159,7 +159,7 @@ public class SpellChecker {
     public List<String> suggest(String word, String language, int distance) {
         word = word.trim();
         if (word.equals("")) {
-            return null;
+            return Collections.EMPTY_LIST;
         }
 
         if (language == null) {

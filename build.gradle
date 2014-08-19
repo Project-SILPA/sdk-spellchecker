@@ -46,3 +46,7 @@ dependencies {
     compile project(':sdk-soundex')
     compile project(':sdk-inexact-search')
 }
+
+// Uncomment following code while updating on maven central
+//
+// apply from: '../gradle-mvn-push.gradle'

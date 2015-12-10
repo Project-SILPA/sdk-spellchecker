@@ -1,4 +1,4 @@
-package org.silpa.spellchecker;
+package org.libindic.spellchecker;
 
 /**
  * Created by sujith on 8/8/14.
@@ -6,8 +6,8 @@ package org.silpa.spellchecker;
 
 import android.content.Context;
 
-import org.silpa.inexactsearch.InexactSearch;
-import org.silpa.sdk.common.LanguageDetect;
+import org.libindic.inexactsearch.InexactSearch;
+import org.libindic.common.LanguageDetect;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

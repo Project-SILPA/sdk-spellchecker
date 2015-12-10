@@ -1,4 +1,4 @@
-package org.silpa.spellchecker;
+package org.libindic.spellchecker;
 
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
